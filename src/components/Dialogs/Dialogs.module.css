@@ -1,0 +1,48 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 5fr 5fr;
+}
+
+.dialogItems {
+    padding: 10px;
+}
+
+.dialog a {
+    color: pink;
+    text-decoration: none;
+}
+
+.dialog a.active {
+    color: red;
+}
+
+.dialog img {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.message img {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+.answers {
+    text-align: right;
+    padding: 15px;
+}
+
+.answer img {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+
+
+
