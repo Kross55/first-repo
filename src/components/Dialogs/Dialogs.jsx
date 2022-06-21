@@ -3,11 +3,6 @@ import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import AnswerItem from "./AnswerItem/AnswerItem";
-import {
-    addMessageBodyCreator,
-    updateNewMessageBodyCreator,
-} from "../../redux/dialogsReduser";
-
 
 const Dialogs = (props) => {
     let dialogsElements =
@@ -21,13 +16,13 @@ const Dialogs = (props) => {
 
     let onNewMessageChange = (e) => {
         let body = e.target.value;
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
     }
 
     let onSendMessageClick = () => {
-        props.dispatch(addMessageBodyCreator());
+        props.addMessageBody();
     }
-    debugger;
+    
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
