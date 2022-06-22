@@ -18,7 +18,7 @@ let initialeState = {
             {id: 4, message: 'Yok'},
             {id: 5, message: 'Hey'},
         ],
-        newMessageBody: '',
+        newMessageBody: 'dialogs',
         answers: [
             {id: 1, answer: 'Hey you'},
             {id: 2, answer: 'Go fuck yourself'},

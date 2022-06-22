@@ -7,15 +7,15 @@ import Dialogs from "./Dialogs";
 
 
 const DialogsContaner = (props) => {
-    let state = props.store.getState().dialogsPage
+    let state = props.store.getState().dialogsPage;
 
     let onNewMessageChange = (body) => {
         props.dispatch(updateNewMessageBodyCreator(body))
-    }
+    };
 
     let onSendMessageClick = () => {
         props.dispatch(addMessageBodyCreator());
-    }
+    };
     
     return <Dialogs 
     dialogs={state.dialogs}

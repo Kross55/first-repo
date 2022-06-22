@@ -17,16 +17,17 @@ const MyPosts = (props) => {
         let text = newPostElement.current.value;
         props.updateNewPostText(text);
     }
-
+    
     return (
         <div className={s.myPosts}>
             My posts
             <div>
                 <textarea
+                    value={props.newPostText}
                     onChange={onPostChange}
                     ref={newPostElement}
                     placeholder='post here'
-                    value={props.newPostText} />
+                     />
             </div>
             <div>
                 <button  onClick={ onAddPost }>Add post</button>

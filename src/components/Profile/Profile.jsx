@@ -9,8 +9,7 @@ const Profile = (props) => {
             <MyPostsContaner
                 store={props.store}
                 dispatch={props.dispatch}
-                /*addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText}*//>
+            />
         </div>
     );
 };

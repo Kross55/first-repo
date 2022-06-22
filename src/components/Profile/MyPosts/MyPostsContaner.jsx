@@ -18,7 +18,7 @@ const MyPostsContaner = (props) => {
 
     return <MyPosts 
       posts={state.posts} 
-      newPostElement={state.newPostText}
+      newPostText={state.newPostText}
       addPost={addPost} 
       updateNewPostText={onPostChange} />
 };
