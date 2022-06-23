@@ -12,20 +12,24 @@ let initialeState = {
         newPostText: 'Yo',
 };
 
-const profileReducer =(state= initialeState, action) => {
+const profileReducer =(state = initialeState, action) => {
     switch (action.type) {
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
-        case ADD_POST:
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText;
+            return stateCopy;
+        };
+        case ADD_POST: {
+            let stateCopy = JSON.parse(JSON.stringify(state))
             let newPost = {
                 id: 6,
                 message: state.newPostText,
                 likes: 0,
             };
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return state;
+            stateCopy.posts.push(newPost);
+            stateCopy.newPostText = '';
+            return stateCopy;
+        };
         default:
             return state;
     }
