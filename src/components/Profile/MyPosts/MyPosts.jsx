@@ -31,7 +31,7 @@ const MyPosts = (props) => {
             </div>
             <div>
                 <button  onClick={ onAddPost }>Add post</button>
-            </div>
+            </div> 
             <div>
                 <button>Remove</button>
             </div>
