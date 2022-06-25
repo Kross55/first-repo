@@ -22,7 +22,7 @@ const Dialogs = (props) => {
     let onSendMessageClick = () => {
         props.addMessageBody();
     }
-    debugger;
+    
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
