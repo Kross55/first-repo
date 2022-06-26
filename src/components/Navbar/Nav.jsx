@@ -9,23 +9,30 @@ const Nav = (props) => {
         props.friends.map ( f => <FriendItem friend={f.friend} />);
     return (
         <nav className={s.nav}>
-            <div>
-                <div className={s.item}>
-                    <NavLink to='/profile' className={navData => navData.isActive ? s.active : s.item}>Profile</NavLink>
+            <div className={s.item}>
+                <div>
+                    <NavLink to='/profile' 
+                        className={n => n.isActive ? s.active : s.item}>Profile</NavLink>
                 </div>
-                <div className={s.item}>
+                <div>
                     <NavLink to='/dialogs'
-                             className={navData => navData.isActive ? s.active : s.item}>Messages</NavLink>
+                        className={n => n.isActive ? s.active : s.item}>Dialogs</NavLink>
                 </div>
-                <div className={s.item}>
-                    <NavLink to='/news' className={navData => navData.isActive ? s.active : s.item}>News</NavLink>
+                <div>
+                    <NavLink to='/news' 
+                        className={n => n.isActive ? s.active : s.item}>News</NavLink>
                 </div>
-                <div className={s.item}>
-                    <NavLink to='/music' className={navData => navData.isActive ? s.active : s.item}>Music</NavLink>
+                <div>
+                    <NavLink to='/music' 
+                        className={n => n.isActive ? s.active : s.item}>Music</NavLink>
                 </div>
-                <div className={s.item}>
+                <div>
                     <NavLink to='/settings'
-                             className={navData => navData.isActive ? s.active : s.item}>Settings</NavLink>
+                        className={n => n.isActive ? s.active : s.item}>Settings</NavLink>
+                </div>
+                <div>
+                    <NavLink to='/friends'
+                        className={n => n.isActive ? s.active : s.item}>Friends</NavLink>
                 </div>
             </div>
             <div>

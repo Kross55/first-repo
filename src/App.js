@@ -8,6 +8,7 @@ import Settings from "./components/Settings/Settings";
 import { Routes, Route} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavContainer from "./components/Navbar/NavContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const App = () => {
     return (
@@ -26,6 +27,8 @@ const App = () => {
                         {<Music/>}/>
                     <Route path="/settings" element=
                         {<Settings/>}/>
+                    <Route path="/friends" element=
+                        {<UsersContainer />}/>
                 </Routes>
             </div>
         </div>

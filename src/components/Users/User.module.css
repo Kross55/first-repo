@@ -1,0 +1,10 @@
+.users {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+}
+
+.users img {
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+}
