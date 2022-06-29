@@ -1,10 +1,8 @@
-.users {
-    display: grid;
-    grid-template-columns: 2fr 5fr 5fr;
-}
-
-.users img {
+.userPhoto {
     width: 100px;
     height: 100px;
-    border-radius: 30px;
+}
+
+.selectedPage {
+    font-weight: bold;
 }
