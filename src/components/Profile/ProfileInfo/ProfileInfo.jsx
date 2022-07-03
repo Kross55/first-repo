@@ -1,6 +1,7 @@
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import s from "./ProfileInfo.module.css";
+import smile from '../../../assets/images/smile.png'
 
 const ProfileInfo = (props) => {
     if(!props.profile){
@@ -13,7 +14,18 @@ const ProfileInfo = (props) => {
             </div>
             <div className={s.profileView}>
                 <img src={props.profile.photos.large}/>
-                ava + description   
+                <div>{props.profile.fullName}</div>
+                <div>Статус: {props.profile.aboutMe}</div>
+                <div className={s.smile}>Ищу работу: {props.profile.lookingForAJob ? <img src={smile}/> : null}</div>
+                <div>Описание: {props.profile.lookingForAJobDescription}</div>
+                <div>Мои контакты:</div>
+                <div>
+                    <div><a href='' >{props.profile.contacts.facebook}</a></div>
+                    <div><a href='' >{props.profile.contacts.vk}</a></div>
+                    <div><a href='' >{props.profile.contacts.twitter}</a></div>
+                    <div><a href='' >{props.profile.contacts.instagram}</a></div>
+                    <div><a href='' >{props.profile.contacts.github}</a></div>
+                </div>
             </div>
         </div>
     );
