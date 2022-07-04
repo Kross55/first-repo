@@ -9,7 +9,7 @@ const Users = (props) => {
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
-    if (i === 10) break; //всего 3960 страниц, мы останавливаем for на 10-й странице
+    if (i === 20) break; //всего 3960 страниц, мы останавливаем for на 10-й странице
   }
 
   return (
