@@ -10,12 +10,30 @@ const instance = axios.create({
 })
 
 export const usersApi = {
+    authMe () {
+        return instance.get(`auth/me`)
+          .then( response => {  //цепочка промисов, цепочка дзен
+            return response.data;
+          })
+      },
     getUser (currentPage=1, pageSize=10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
           .then( response => {  //цепочка промисов, цепочка дзен
             return response.data;
           })
-      }
+      },
+    follow (userId) {
+        return instance.post(`follow/${userId}`)
+          .then( response => {  //цепочка промисов, цепочка дзен
+            return response.data;
+        })
+    },
+    unfollow (userId) {
+        return instance.delete(`follow/${userId}`)
+          .then( response => {  //цепочка промисов, цепочка дзен
+            return response.data;
+        })
+    },
 }
 
  
