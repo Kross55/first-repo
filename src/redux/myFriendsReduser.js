@@ -71,4 +71,15 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FATCHING, isFetching })
 export const toggleFollowingInProgress = (isFetching, userId) => ({type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, userId})
 
+export const getUserThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        usersApi.getUser(currentPage, pageSize).then( data => {
+           dispatch(toggleIsFetching(false));
+           dispatch(setUsers(data.items));
+           dispatch(setTotalUsersCount(data.totalCount));
+      })
+    }
+}
+
 export default usersReducer;
