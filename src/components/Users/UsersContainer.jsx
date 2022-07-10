@@ -1,9 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { follow, setCurrentPage, setUsers, setTotalUsersCount, unfollow, toggleIsFetching, toggleFollowingInProgress, getUsersThunkCreator, followThunkCreator, unfollowThunkCreator } from '../../redux/myFriendsReduser';
+import { follow, setCurrentPage, setUsers, setTotalUsersCount, unfollow, toggleIsFetching, toggleFollowingInProgress, getUsers } from '../../redux/myFriendsReduser';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import { usersApi } from './../../api/api';
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -12,11 +11,7 @@ class UsersContainer extends React.Component {
 
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
-    this.props.toggleIsFetching(true);
-    usersApi.getUser(pageNumber, this.props.pageSize).then( data => {
-        this.props.toggleIsFetching(false);
-        this.props.setUsers(data.items);
-      });
+    this.props.getUsers(pageNumber, this.props.pageSize)
   };
 
   render() {
@@ -28,10 +23,8 @@ class UsersContainer extends React.Component {
           pageSize={this.props.pageSize}
           currentPage={this.props.currentPage}
           users={this.props.users}
-          /*follow={this.props.follow}
-          unfollow={this.props.unfollow}*/ 
-          followThunkCreator={this.props.followThunkCreator}
-          unfollowThunkCreator={this.props.unfollowThunkCreator}
+          follow={this.props.follow}
+          unfollow={this.props.unfollow} s
           followingInProgress={this.props.followingInProgress}//прокидываем props из UsersContainer в Users
           onPageChanged={this.onPageChanged}
         />
@@ -54,6 +47,5 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   follow, unfollow, setUsers,
   setCurrentPage, setTotalUsersCount, 
-  toggleIsFetching, toggleFollowingInProgress, getUsers: getUsersThunkCreator,
-  followThunkCreator, unfollowThunkCreator
+  toggleIsFetching, toggleFollowingInProgress, getUsers,
 })(UsersContainer);
