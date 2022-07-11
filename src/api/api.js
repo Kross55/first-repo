@@ -9,12 +9,6 @@ const instance = axios.create({
 })
 
 export const usersApi = {
-  authMe () {
-    return instance.get(`auth/me`)
-      .then( response => {  //цепочка промисов, цепочка дзен
-        return response.data;
-      })
-    },
   getUser (currentPage=1, pageSize=10) {
     return instance.get(`users?page=${currentPage}&count=${pageSize}`)
       .then( response => {  
@@ -39,6 +33,15 @@ export const usersApi = {
         return response.data;
       })
   }    
+}
+
+export const authApi = {
+  me () {
+    return instance.get(`auth/me`)
+      .then( response => {  //цепочка промисов, цепочка дзен
+        return response.data;
+      })
+  },
 }
 
  

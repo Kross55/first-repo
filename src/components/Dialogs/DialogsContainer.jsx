@@ -10,7 +10,8 @@ let addStateToProps = (state) => {
         dialogs: state.dialogsPage.dialogs,//state=store.getState()
         messages: state.dialogsPage.messages,
         answers: state.dialogsPage.answers,
-        newMessageBody: state.dialogsPage.newMessageBody
+        newMessageBody: state.dialogsPage.newMessageBody,
+        isAuth: state.auth.isAuth,
     };
 };
 

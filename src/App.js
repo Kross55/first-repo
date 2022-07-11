@@ -9,6 +9,7 @@ import NavContainer from "./components/Navbar/NavContainer";
 import UserContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from './components/Header/HeaderContainer';
+import Login from "./components/Login/Login";
 
 const App = () => {
     return (
@@ -32,6 +33,8 @@ const App = () => {
                         {<Settings />} />
                     <Route path="/friends" element=
                         {<UserContainer />} />
+                    <Route path="/login" element=
+                        {<Login />} />   
                 </Routes>
             </div>
         </div>
