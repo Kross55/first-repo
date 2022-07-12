@@ -1,14 +1,19 @@
 import React from 'react'
-import s from "./ProfileInfo.module.css";
-
 class ProfileStatus extends React.Component {
     state = {
         editMode: false
     }
 
-    activateEditeMode = () => {  //обычно метод создаётся - activateEditeMode(), это экспериментальный вариант, но он работает
-        this.state.editMode = true
-        this.forceUpdate()
+    activateEditeMode = () => { 
+        this.setState( {
+            editMode: true
+        } )
+    }
+
+    deActivateEditeMode = () => { 
+        this.setState( {
+            editMode: false
+        } )
     }
 
     render() {
@@ -21,7 +26,7 @@ class ProfileStatus extends React.Component {
                 }
                 { this.state.editMode &&
                     <div>
-                        <input value={this.props.status} />
+                        <input autoFocus={true} onBlur={ this.deActivateEditeMode } value={this.props.status} />
                     </div>
                 }
             </div>
