@@ -16,7 +16,9 @@ const ProfileInfo = (props) => {
             <div className={s.profileView}>
                 <img src={props.profile.photos.large}/>
                 <div>{props.profile.fullName}</div>
-                <ProfileStatus status='Kross55  rules'/>
+                <ProfileStatus
+                    status={props.status}
+                    updateStatus={props.updateStatus} />
                 <div className={s.smile}>Ищу работу: {props.profile.lookingForAJob ? <img src={smile}/> : null}</div>
                 <div>Описание: {props.profile.lookingForAJobDescription}</div>
                 <div>Мои контакты:</div>

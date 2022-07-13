@@ -39,14 +39,26 @@ export const profileApi = {
       .then( response => {  
         return response.data;
       })
-  }    
+  },
+  getStatus (userId) {
+    return instance.get(`profile/status/${userId}`)
+      .then( response => {  
+        return response.data;
+      })
+  },
+  updateStatus (status) {
+    return instance.put(`profile/status`, {status: status})//смотри документацию сервера(в put запрос вставляется объект после URL)
+      .then( response => {  
+        return response.data;
+      })
+  },    
 }
 
 
 export const authApi = {
   me () {
     return instance.get(`auth/me`)
-      .then( response => {  //цепочка промисов, цепочка дзен
+      .then( response => {
         return response.data;
       })
   },
