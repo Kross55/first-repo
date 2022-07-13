@@ -28,12 +28,20 @@ export const usersApi = {
     })
   },
   getUserProfile (userId) {
+    console.warn('Obsolete method. Please profileApi object.')
+      return profileApi.getUserProfile(userId)
+  }    
+}
+
+export const profileApi = {
+  getUserProfile (userId) {
     return instance.get(`profile/${userId}`)
       .then( response => {  
         return response.data;
       })
   }    
 }
+
 
 export const authApi = {
   me () {
