@@ -77,11 +77,11 @@ export const getStatus = (userId) => {
     }
 }
 
-export const updateStatus = (state) => {
+export const updateStatus = (status) => {
     return (dispatch) => {
-        profileApi.updateStatus(state).then(data => {
+        profileApi.updateStatus(status).then(data => {
             if (data.resultCode === 0) {
-                dispatch(setStatus(data))
+                dispatch(setStatus(status))
             }
         })
     }
