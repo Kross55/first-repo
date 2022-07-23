@@ -44,6 +44,8 @@ const Dialogs = (props) => {
     );
 };
 
+
+
 const AddMessageForm = (props) => {
     let submit = (values, { setSubmitting }) => {
         setTimeout(() => {
