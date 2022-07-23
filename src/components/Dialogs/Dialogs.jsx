@@ -3,7 +3,7 @@ import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import AnswerItem from "./AnswerItem/AnswerItem";
-import { Field, Form, Formik } from "formik";
+import AddMessageForm from "./AddMessageForm/AddMessageForm";
 
 const Dialogs = (props) => {
     let dialogsElements =
@@ -13,21 +13,6 @@ const Dialogs = (props) => {
     let answersElements =
         props.answers.map( a => <AnswerItem answer={a.answer}/>);
 
-    let newMessageBody = props.newMessageBody;
-
-    let onNewMessageChange = (e) => {
-        let body = e.target.value;
-        props.updateNewMessageBody(body)
-    }
-
-    let onSendMessageClick = () => {
-        props.addMessageBody();
-    }
-
-    let addNewMessage = () => {
-        alert('sdsd')
-    }
-
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
@@ -35,7 +20,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 { messagesElements }
-                <AddMessageForm onSubmit={addNewMessage}/>
+                <AddMessageForm addMessageBody={props.addMessageBody}/>
             </div>
             <div className={s.answers}>
                 { answersElements }
@@ -43,40 +28,5 @@ const Dialogs = (props) => {
         </div>
     );
 };
-
-
-
-const AddMessageForm = (props) => {
-    let submit = (values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }
-    return (
-        <Formik
-         initialValues={{
-           newMessageBody: "",
-         }}
-         validateOnBlur
-         onSubmit={submit}
-        >
-        { ({isSubmitting}) => (
-        <Form>
-            <div>
-                <Field 
-                    as='textarea'
-                    name='newMessageBody'
-                    placeholder='text your message'
-                />
-            </div>
-            <div>
-                <button type={"submit"} disabled={isSubmitting}>Send</button>
-            </div>
-        </Form>
-        )}
-        </Formik>
-    )
-}
 
 export default Dialogs;
