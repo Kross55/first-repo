@@ -51,19 +51,21 @@ const Login = (props) => {
         validate={validateLoginForm}
         validateOnBlur
         validationSchema={validationSchemaLoginForm}
-        onSubmit={(values) => {
-          props.login(values.email, values.password, values.rememberMe);// передаём в BLL эти параметры из локального стейта Formik
+        onSubmit={(values, { setSubmitting, setStatus }) => {
+          props.login(values.email, values.password, values.rememberMe, setStatus);// передаём в BLL эти параметры из локального стейта Formik
+          setSubmitting(false);
         }}
       >
-        {({ isValid, handleSubmit, dirty }) => (
+        {({ isValid, handleSubmit, dirty, status }) => (
           <Form>
+            
             <div>
               <label htmlFor="name">Имя</label>
               <br />
               <Field name={"name"} type={"text"} />
             </div>
             <ErrorMessage name="name" component="div" />
-
+            
             <div>
               <label htmlFor="secondName">Фамилия</label>
               <br />
@@ -103,6 +105,8 @@ const Login = (props) => {
             </div>
             <ErrorMessage name="confirmPassword" component="div" />
 
+            <div>{status}</div>
+            
             <div>
               <Field name={"rememberMe"} type={"checkbox"} id="rememberMe" />
               <label htmlFor={"rememberMe"}> remember me </label>
@@ -118,7 +122,6 @@ const Login = (props) => {
           </Form>
         )}
       </Formik>
-
       <div>...</div>
     </div>
   );
