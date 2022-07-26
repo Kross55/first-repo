@@ -10,42 +10,50 @@ import UserContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
-import { getAuthUserData } from './redux/auth-reducer';
+import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
+import Preloader from "./components/common/Preloader/Preloader";
 
 class App extends React.Component {
-    componentDidMount(){
-        this.props.getAuthUserData()
+    componentDidMount() {
+        this.props.initializeApp()
     }
     render() {
-    return (
-        <div className="app-wrapper">
-            <HeaderContainer />
-            <NavContainer />
-            <div className="app-wrapper-content">
-                <Routes>
-                    <Route path="/dialogs/*" element=
-                        {<DialogsContainer />} />
-                    <Route path="/profile/*" element=
-                        {<ProfileContainer />}>
+        if (!this.props.initialized) {
+            return <Preloader />
+        }
+        return (
+            <div className="app-wrapper">
+                <HeaderContainer />
+                <NavContainer />
+                <div className="app-wrapper-content">
+                    <Routes>
+                        <Route path="/dialogs/*" element=
+                            {<DialogsContainer />} />
+                        <Route path="/profile/*" element=
+                            {<ProfileContainer />}>
                             <Route path=":userIdNew" element=
-                        {<ProfileContainer />}/>
-                    </Route>
-                    <Route path="/news" element=
-                        {<News />} />
-                    <Route path="/music" element=
-                        {<Music />} />
-                    <Route path="/settings" element=
-                        {<Settings />} />
-                    <Route path="/friends" element=
-                        {<UserContainer />} />
-                    <Route path="/login" element=
-                        {<Login />} />   
-                </Routes>
+                                {<ProfileContainer />} />
+                        </Route>
+                        <Route path="/news" element=
+                            {<News />} />
+                        <Route path="/music" element=
+                            {<Music />} />
+                        <Route path="/settings" element=
+                            {<Settings />} />
+                        <Route path="/friends" element=
+                            {<UserContainer />} />
+                        <Route path="/login" element=
+                            {<Login />} />
+                    </Routes>
+                </div>
             </div>
-        </div>
-    );
-}
+        );
+    }
 };
 
-export default connect( null, { getAuthUserData }) (App);
+const mapStateToProps = (state) => ({
+    initialized: state.app.initialized
+})
+
+export default connect(mapStateToProps, { initializeApp })(App);
