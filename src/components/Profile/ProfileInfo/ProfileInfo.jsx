@@ -2,7 +2,7 @@ import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import s from "./ProfileInfo.module.css";
 import smile from '../../../assets/images/smile.png'
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
     if(!props.profile){
@@ -16,7 +16,7 @@ const ProfileInfo = (props) => {
             <div className={s.profileView}>
                 <img src={props.profile.photos.large}/>
                 <div>{props.profile.fullName}</div>
-                <ProfileStatus
+                <ProfileStatusWithHooks
                     status={props.status}
                     updateStatus={props.updateStatus} />
                 <div className={s.smile}>Ищу работу: {props.profile.lookingForAJob ? <img src={smile}/> : null}</div>
