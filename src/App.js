@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -14,15 +14,16 @@ import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
 import Preloader from "./components/common/Preloader/Preloader";
 
-class App extends React.Component {
-    componentDidMount() {
-        this.props.initializeApp()
+const App = (props) => {
+    
+    useEffect(() => {
+        props.initializeApp()
+    }, [initializeApp])
+
+    if (!props.initialized) {
+        return <Preloader />
     }
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader />
-        }
-        return (
+    return (
             <div className="app-wrapper">
                 <HeaderContainer />
                 <NavContainer />
@@ -49,7 +50,6 @@ class App extends React.Component {
                 </div>
             </div>
         );
-    }
 };
 
 const mapStateToProps = (state) => ({
