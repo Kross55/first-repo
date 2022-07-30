@@ -5,6 +5,17 @@ import { connect } from 'react-redux';
 import { login } from './../../redux/auth-reducer';
 import { Navigate } from 'react-router-dom';
 
+const createField = (name, type, placeholder, errorName) => {
+  return (
+    <div>
+      <div>
+        <Field name={name} type={type} placeholder={placeholder} />
+      </div>
+      <ErrorMessage name={errorName} component="div" />
+    </div>
+  );
+};
+
 const validateLoginForm = values => {
    const errors = {};
    if (!values.email) {
@@ -51,33 +62,49 @@ const Login = (props) => {
         validate={validateLoginForm}
         validateOnBlur
         validationSchema={validationSchemaLoginForm}
+        
         onSubmit={(values, { setSubmitting, setStatus }) => {
           props.login(values.email, values.password, values.rememberMe, setStatus);// передаём в BLL эти параметры из локального стейта Formik
           setSubmitting(false);
         }}
       >
         {({ isValid, handleSubmit, dirty, status }) => (
-          <Form>
-            
+          <Form >
+
+            <label htmlFor="name">Имя</label>
+            <br />
+            {createField("name", "text", "Stepan", "name")}
+            {/*
             <div>
               <label htmlFor="name">Имя</label>
               <br />
               <Field name={"name"} type={"text"} />
             </div>
             <ErrorMessage name="name" component="div" />
-            
+            */}
+
+            <label htmlFor="secondName">Фамилия</label>
+            <br />
+            {createField("secondName", "text", "Bandera", "secondName")}
+            {/*
             <div>
               <label htmlFor="secondName">Фамилия</label>
               <br />
               <Field name={"secondName"} type={"text"} />
             </div>
             <ErrorMessage name="secondName" component="div" />
+            */}
 
+            {createField("email", "text", "e-mail", "email")}
+            {/*
             <div>
               <Field name={"email"} type={"text"} placeholder={"e-mail"} />
             </div>
             <ErrorMessage name="email" component="div" />
+            */}
 
+            {createField("confirmEmail", "text", "confirm e-mail", "confirmEmail")}
+            {/*
             <div>
               <Field
                 name={"confirmEmail"}
@@ -86,7 +113,10 @@ const Login = (props) => {
               />
             </div>
             <ErrorMessage name="confirmEmail" component="div" />
+            */}
 
+            {createField("password", "password", "password", "password")}
+            {/*
             <div>
               <Field
                 name={"password"}
@@ -95,7 +125,10 @@ const Login = (props) => {
               />
             </div>
             <ErrorMessage name="password" component="div" />
+            */}
 
+            {createField("confirmPassword", "password", "confirm password", "confirmPassword")}
+            {/*
             <div>
               <Field
                 name={"confirmPassword"}
@@ -104,6 +137,7 @@ const Login = (props) => {
               />
             </div>
             <ErrorMessage name="confirmPassword" component="div" />
+            */}
 
             <div>{status}</div>
             
