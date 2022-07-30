@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { connect } from 'react-redux';
 import { login } from './../../redux/auth-reducer';
 import { Navigate } from 'react-router-dom';
+import { minMaxLengthCreator } from '../common/validators/validators';
 
 const createField = (name, type, placeholder, errorName) => {
   return (
@@ -31,10 +32,7 @@ const validateLoginForm = values => {
 const validationSchemaLoginForm = Yup.object().shape( {
    name: Yup.string().typeError("Должно быть строкой").required("Обязательно 1"),
    secondName: Yup.string().typeError("Должно быть строкой").required("Обязательно 2"),
-   password: Yup.string()
-      .min( 2, "Must be longer than 2 characters" )
-      .max( 10, "Must be shorter than 10 characters" )
-      .required( "Required 2" ),
+   password: minMaxLengthCreator(3, 12).required( "Required 2" ),
    confirmPassword: Yup.string().oneOf([Yup.ref("password")], "Пароли не совпадают").required("Обязательно 3"),
    email: Yup.string().email("введите верный email"),
    confirmEmail: Yup.string().oneOf([Yup.ref("email")], "Email не совпадают").required("Обязательно 4")
@@ -74,70 +72,18 @@ const Login = (props) => {
             <label htmlFor="name">Имя</label>
             <br />
             {createField("name", "text", "Stepan", "name")}
-            {/*
-            <div>
-              <label htmlFor="name">Имя</label>
-              <br />
-              <Field name={"name"} type={"text"} />
-            </div>
-            <ErrorMessage name="name" component="div" />
-            */}
 
             <label htmlFor="secondName">Фамилия</label>
             <br />
             {createField("secondName", "text", "Bandera", "secondName")}
-            {/*
-            <div>
-              <label htmlFor="secondName">Фамилия</label>
-              <br />
-              <Field name={"secondName"} type={"text"} />
-            </div>
-            <ErrorMessage name="secondName" component="div" />
-            */}
 
             {createField("email", "text", "e-mail", "email")}
-            {/*
-            <div>
-              <Field name={"email"} type={"text"} placeholder={"e-mail"} />
-            </div>
-            <ErrorMessage name="email" component="div" />
-            */}
 
             {createField("confirmEmail", "text", "confirm e-mail", "confirmEmail")}
-            {/*
-            <div>
-              <Field
-                name={"confirmEmail"}
-                type={"text"}
-                placeholder={"confirm e-mail"}
-              />
-            </div>
-            <ErrorMessage name="confirmEmail" component="div" />
-            */}
 
             {createField("password", "password", "password", "password")}
-            {/*
-            <div>
-              <Field
-                name={"password"}
-                type={"password"}
-                placeholder={"password"}
-              />
-            </div>
-            <ErrorMessage name="password" component="div" />
-            */}
 
             {createField("confirmPassword", "password", "confirm password", "confirmPassword")}
-            {/*
-            <div>
-              <Field
-                name={"confirmPassword"}
-                type={"password"}
-                placeholder={"confirm password"}
-              />
-            </div>
-            <ErrorMessage name="confirmPassword" component="div" />
-            */}
 
             <div>{status}</div>
             
