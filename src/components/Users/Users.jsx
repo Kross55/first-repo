@@ -1,10 +1,8 @@
 import React from "react";
-import styles from "./Users.module.css";
-import userPhoto from "../../assets/images/user.png";
-import { NavLink } from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
+import User from "./User";
 
-const Users = ({ totalUsersCount, pageSize, currentPage, onPageChanged, ...props}) => {
+const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, ...props}) => {
   /*
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
@@ -34,7 +32,16 @@ const Users = ({ totalUsersCount, pageSize, currentPage, onPageChanged, ...props
         }
       </div>
       */}
-      {props.users.map((u) => (
+      <div>
+        {props.users.map((u) => (
+          <User
+            key={u.id}
+            user={u}
+            followingInProgress={props.followingInProgress}
+            unfollow={props.unfollow}
+            follow={props.follow}
+          />
+          /*
         <div key={u.id}>
           <span>
             <div>
@@ -78,7 +85,9 @@ const Users = ({ totalUsersCount, pageSize, currentPage, onPageChanged, ...props
             </span>
           </span>
         </div>
-      ))}
+        */
+        ))}
+      </div>
     </div>
   );
 };
