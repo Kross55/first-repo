@@ -2,11 +2,11 @@ import React from "react";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 
-const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, ...props}) => {
+const Users = ({totalUsersCount, pageSize, portionSize, currentPage, onPageChanged, ...props}) => {
   return (
     <div>
       <Paginator
-        totalUsersCount={totalUsersCount}
+        totalItemsCount={totalUsersCount}
         pageSize={pageSize}
         currentPage={currentPage}
         onPageChanged={onPageChanged}
