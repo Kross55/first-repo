@@ -3,11 +3,7 @@ import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import AnswerItem from "./AnswerItem/AnswerItem";
-import {
-    addMessageBodyCreator,
-    updateNewMessageBodyCreator,
-} from "../../redux/dialogsReduser";
-
+import AddMessageForm from "./AddMessageForm/AddMessageForm";
 
 const Dialogs = (props) => {
     let dialogsElements =
@@ -17,17 +13,6 @@ const Dialogs = (props) => {
     let answersElements =
         props.answers.map( a => <AnswerItem answer={a.answer}/>);
 
-    let newMessageBody = props.newMessageBody;
-
-    let onNewMessageChange = (e) => {
-        let body = e.target.value;
-        props.dispatch(updateNewMessageBodyCreator(body))
-    }
-
-    let onSendMessageClick = () => {
-        props.dispatch(addMessageBodyCreator());
-    }
-    debugger;
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
@@ -35,15 +20,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 { messagesElements }
-                <div>
-                    <textarea
-                        onChange={onNewMessageChange}
-                        value={newMessageBody}
-                        placeholder='text your message'/>
-                </div>
-                <div>
-                    <button onClick={onSendMessageClick}>Send</button>
-                </div>
+                <AddMessageForm addMessageBody={props.addMessageBody}/>
             </div>
             <div className={s.answers}>
                 { answersElements }

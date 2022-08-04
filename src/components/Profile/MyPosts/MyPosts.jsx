@@ -1,41 +1,20 @@
 import React from "react";
+import AddPostForm from "./AddPostFormik/AddPostForm";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profileReduser";
-
 
 const MyPosts = (props) => {
-
+    
     let postsElements =
-        props.posts.map( p => <Post message={p.message} likes={p.likes}/>)
-
-    let newPostElement = React.createRef()
-
-    let addPost = () => {
-        props.dispatch(addPostActionCreator());
-    }
-
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        let action = updateNewPostTextActionCreator(text);
-        props.dispatch(action);
-    }
+        [...props.posts]//копируем пропсы, чтобы не мутировать стейт
+            .reverse()//мутирующий метод массива(чтобы его применить нужно предварительно скопировать массив)
+            .map( p => <Post message={p.message} likes={p.likes}/>)//не мутирующий метод массива
 
     return (
         <div className={s.myPosts}>
             My posts
             <div>
-                <textarea
-                    onChange={onPostChange}
-                    ref={newPostElement}
-                    placeholder='post here'
-                    value={props.newPostText} />
-            </div>
-            <div>
-                <button  onClick={ addPost }>Add post</button>
-            </div>
-            <div>
-                <button>Remove</button>
+                <AddPostForm addPost={props.addPost} />
             </div>
             <div>
                 { postsElements }

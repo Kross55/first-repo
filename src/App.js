@@ -1,46 +1,83 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
-import Dialogs from "./components/Dialogs/Dialogs";
-import Header from "./components/Header/Header";
-import Nav from "./components/Navbar/Nav";
-import Profile from "./components/Profile/Profile";
-import News from "./components/News/News";
-import Music from "./components/Music/Music";
-import Settings from "./components/Settings/Settings";
-import { Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider, connect } from 'react-redux';
+import store from './redux/redux-store';
+import HeaderContainer from './components/Header/HeaderContainer';
+import NavContainer from "./components/Navbar/NavContainer";
+//import DialogsContainer from "./components/Dialogs/DialogsContainer";  загружалась вмесьте с компонентой App
+//import ProfileContainer from "./components/Profile/ProfileContainer";  загружалась вмесьте с компонентой App
+//import News from "./components/News/News";                             загружалась вмесьте с компонентой App
+//import Music from "./components/Music/Music";                          загружалась вмесьте с компонентой App
+//import Settings from "./components/Settings/Settings";                 загружалась вмесьте с компонентой App
+//import UserContainer from "./components/Users/UsersContainer";         загружалась вмесьте с компонентой App
+//import Login from "./components/Login/Login";                          загружалась вмесьте с компонентой App
+import { initializeApp } from './redux/app-reducer';
+import Preloader from "./components/common/Preloader/Preloader";
+
+//ленивые компоненты, создаются для отложенного рендера
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer")); //теперь загружается(бандлится) когда мы переходим на неё
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer")); //теперь загружается(бандлится) когда мы переходим на неё
+const News = React.lazy(() => import("./components/News/News"));                            //теперь загружается(бандлится) когда мы переходим на неё
+const Music = React.lazy(() => import("./components/Music/Music"));                         //теперь загружается(бандлится) когда мы переходим на неё
+const Settings = React.lazy(() => import("./components/Settings/Settings"));                //теперь загружается(бандлится) когда мы переходим на неё
+const UserContainer  = React.lazy(() => import("./components/Users/UsersContainer"));       //теперь загружается(бандлится) когда мы переходим на неё
+const Login = React.lazy(() => import("./components/Login/Login"));                         //теперь загружается(бандлится) когда мы переходим на неё
 
 const App = (props) => {
+
+    useEffect(() => {
+        props.initializeApp()
+    }, [initializeApp])
+
+    if (!props.initialized) {
+        return <Preloader />
+    }
     return (
         <div className="app-wrapper">
-            <Header/>
-            <Nav friends={props.state.sidebar.friends}/>
+            <HeaderContainer />
+            <NavContainer />
             <div className="app-wrapper-content">
-                <Routes>
-                    <Route path="/dialogs/*" element=
-                        {<Dialogs
-                            answers={props.state.dialogsPage.answers}
-                            messages={props.state.dialogsPage.messages}
-                            dialogs={props.state.dialogsPage.dialogs}
-                            newMessageBody={props.state.dialogsPage.newMessageBody}
-                            dispatch={props.dispatch}
-                            /*updateNewMessageText={props.updateNewMessageText}
-                            addMessage={props.addMessage}*//>}/>
-                    <Route path="/profile" element=
-                        {<Profile
-                            profilePage={props.state.profilePage}
-                            dispatch={props.dispatch}
-                            /*addPost={props.addPost}
-                            updateNewPostText={props.updateNewPostText}*//>}/>
-                    <Route path="/news" element=
-                        {<News/>}/>
-                    <Route path="/music" element=
-                        {<Music/>}/>
-                    <Route path="/settings" element=
-                        {<Settings/>}/>
-                </Routes>
+                <React.Suspense fallback={<div>Loading...</div>}> {/*Все ленивые рендеры должны быть внутри компоненты Suspense*/}
+                    <Routes>                                      {/*<div>Loading...</div> - мы видим пока загружается ленивы компонент*/}
+                        <Route path="/dialogs/*" element=
+                            {<DialogsContainer />} />
+                        <Route path="/profile/*" element=
+                            {<ProfileContainer />}>
+                            <Route path=":userIdNew" element=
+                                {<ProfileContainer />} />
+                        </Route>
+                        <Route path="/news" element=
+                            {<News />} />
+                        <Route path="/music" element=
+                            {<Music />} />
+                        <Route path="/settings" element=
+                            {<Settings />} />
+                        <Route path="/friends" element=
+                            {<UserContainer />} />
+                        <Route path="/login" element=
+                            {<Login />} />
+                    </Routes>
+                </React.Suspense>
             </div>
         </div>
     );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+    initialized: state.app.initialized
+})
+
+const AppContainer = connect(mapStateToProps, { initializeApp })(App);
+
+const SamuraiJsApp = (props) => {
+    return (
+        <BrowserRouter>
+            <Provider store={store} >
+                <AppContainer />
+            </Provider>
+        </BrowserRouter>
+    )
+}
+
+export default SamuraiJsApp
