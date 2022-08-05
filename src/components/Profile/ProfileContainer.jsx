@@ -28,17 +28,16 @@ class ProfileContainer extends React.Component {
       this.props.getStatus(userId)
   }
 
-  componentDidMount() {//в данной конфигурации перейдя на профиль какого-то из юзеров, при нажатиии на ссылку profile, мі не верн'мся на свой профиль
+  componentDidMount() {//монтируется единожды и при изменении пропсов ничего не перерисовывает
     this.updateProfile()
   }
 
-  /*
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if(this.props.match.params.userIdNew != prevProps.match.params.userIdNew){
+  componentDidUpdate(prevProps, prevState, snapshot) {//добавляем для обновления профиля, т.к. приходят новые пропсы
+    if(this.props.match.params.userIdNew != prevProps.match.params.userIdNew){//условие для обновления компоненты, чтобы не уходила в зацикленность
       this.updateProfile()
     }
   }
-  */
+  
 
   render() {
     return <Profile
