@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";//Меняем BrowserRouter на HashRouter, чтобы работала перезагрузка страницы при запуске и работе с GitHub
 import { Provider, connect } from 'react-redux';
 import store from './redux/redux-store';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -72,11 +72,11 @@ const AppContainer = connect(mapStateToProps, { initializeApp })(App);
 
 const SamuraiJsApp = (props) => {
     return (
-        <BrowserRouter>
+        <HashRouter>{/*для правильной работы GitHub*/}
             <Provider store={store} >
                 <AppContainer />
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 

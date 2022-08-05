@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: `https://social-network.samuraijs.com/api/1.0/`, 
+  baseURL: `https://social-network.samuraijs.com/api/1.0/`, //просто обновил ключ, можго было этого не делать!
   withCredentials: true,
   headers: {
-    "api-key": "f637ab28-dba8-4923-9af9-1e97ec3d5d7f"
+    "api-key": "cb12c286-7040-4165-be75-e6f2afe85300"
   } 
 })
 
