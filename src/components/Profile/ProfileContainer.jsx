@@ -15,7 +15,8 @@ export function withRouter(Children){
 }
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+
+  updateProfile() {
     let userId = this.props.match.params.userIdNew;
     if (!userId) {
       userId = this.props.authorizedUserId
@@ -26,6 +27,18 @@ class ProfileContainer extends React.Component {
       this.props.getUserProfile(userId)
       this.props.getStatus(userId)
   }
+
+  componentDidMount() {//в данной конфигурации перейдя на профиль какого-то из юзеров, при нажатиии на ссылку profile, мі не верн'мся на свой профиль
+    this.updateProfile()
+  }
+
+  /*
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.match.params.userIdNew != prevProps.match.params.userIdNew){
+      this.updateProfile()
+    }
+  }
+  */
 
   render() {
     return <Profile
