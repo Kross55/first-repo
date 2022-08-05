@@ -28,29 +28,25 @@ export const usersApi = {
 }
 
 export const profileApi = {
-  async getUserProfile (userId) {
-    let response = await instance.get(`profile/${userId}`)
-        return response.data
+  async getUserProfile(userId) {
+    let response = await instance.get(`profile/${userId}`);
+    return response.data;
   },
-  async getStatus (userId) {
-    let response = await instance.get(`profile/status/${userId}`)
-        return response.data
+  async getStatus(userId) {
+    let response = await instance.get(`profile/status/${userId}`);
+    return response.data;
   },
-  async updateStatus (status) {
-    let response = await instance.put(`profile/status`, {status: status}) 
-        return response.data
+  async updateStatus(status) {
+    let response = await instance.put(`profile/status`, { status: status });
+    return response.data;
   },
-  async savePhoto (photoFile) {
-    const formData = new FormData()
-    formData.append("image", photoFile)
-    let response = await instance.put(`profile/photo`, photoFile, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }) 
-        return response.data
-  },    
-}
+  async savePhoto(photoFile) {
+    const formData = new FormData();             //часть кода необходимый для зарузки файлов
+    formData.append("image", photoFile);         //"image" взято из документации сервера, так называется объект фото Properties -image: required(file)
+    let response = await instance.put(`profile/photo`, formData); //передаём фото на сервер в качестве второго параметра(как обычно для put)
+    return response.data;
+  },
+};
 
 
 export const authApi = {

@@ -48,7 +48,7 @@ const profileReducer = (state = initialeState, action) => {
         case SAVE_PHOTO_SUCCESS:
             return {
                 ...state,
-                profile: { ...state.profile, photos: action.photos}
+                profile: {...state.profile, photos: action.photos}//делаем копию профиля и добавляем в него нашу картинку/фото
             };   
         default:
             return state;
@@ -59,7 +59,7 @@ export const addPost = (newPostBody) => ({ type: ADD_POST, newPostBody });
 export const deletePost = (postId) => ({ type: DELETE_POST, postId });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
-export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
+export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });//АС который диспатчим после получения ответа от сервера
 
 export const getUserProfile = (userId) => async (dispatch) => {
     let data = await usersApi.getUserProfile(userId)
@@ -78,10 +78,10 @@ export const updateStatus = (status) => async (dispatch) => {
     }
 }
 
-export const savePhoto = (file) => async (dispatch) => {
-    let data = await profileApi.savePhoto(file)
+export const savePhoto = (file) => async (dispatch) => {//санка для передачи картинки/фото на сервер
+    let data = await profileApi.savePhoto(file)         //запрос в api
     if (data.resultCode === 0) {
-        dispatch(savePhotoSuccess(data.data.photos))
+        dispatch(savePhotoSuccess(data.data.photos))    //помещаем картинку/фото в state
     }
 }
 

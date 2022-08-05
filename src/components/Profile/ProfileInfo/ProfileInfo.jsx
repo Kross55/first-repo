@@ -11,8 +11,8 @@ const ProfileInfo = (props) => {
     }
 
     const onMainPhotoSelected = (e) => {
-      if(e.target.file.length){
-        props.savePhoto(e.target.files[0])
+      if(e.target.files.length){          //проверка массива с файлами на количество объектов/на его длиинну
+        props.savePhoto(e.target.files[0])//диспатчим санку, передаём выбранное фото на сервер, и сохраняем его в state.profile
       }
     }
 
@@ -23,7 +23,7 @@ const ProfileInfo = (props) => {
             </div>*/}
             <div className={s.profileView}>
                 <img src={props.profile.photos.large || userPhoto}/>
-                {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
+                {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}{/*добавляем onChange чтобы можно было менять наше фото*/ }
                 <div>{props.profile.fullName}</div>
                 <ProfileStatusWithHooks
                     status={props.status}
