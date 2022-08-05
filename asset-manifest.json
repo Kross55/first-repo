@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/first-repo/static/css/main.007e8588.css",
-    "main.js": "/first-repo/static/js/main.7af7bdd5.js",
+    "main.js": "/first-repo/static/js/main.af9006c5.js",
     "static/css/548.7b8995a0.chunk.css": "/first-repo/static/css/548.7b8995a0.chunk.css",
     "static/js/548.e279cad0.chunk.js": "/first-repo/static/js/548.e279cad0.chunk.js",
     "static/css/490.6b1a83f0.chunk.css": "/first-repo/static/css/490.6b1a83f0.chunk.css",
@@ -17,7 +17,7 @@
     "static/media/circles.svg": "/first-repo/static/media/circles.fbbfe33606835357a1d59a4f67096356.svg",
     "index.html": "/first-repo/index.html",
     "main.007e8588.css.map": "/first-repo/static/css/main.007e8588.css.map",
-    "main.7af7bdd5.js.map": "/first-repo/static/js/main.7af7bdd5.js.map",
+    "main.af9006c5.js.map": "/first-repo/static/js/main.af9006c5.js.map",
     "548.7b8995a0.chunk.css.map": "/first-repo/static/css/548.7b8995a0.chunk.css.map",
     "548.e279cad0.chunk.js.map": "/first-repo/static/js/548.e279cad0.chunk.js.map",
     "490.6b1a83f0.chunk.css.map": "/first-repo/static/css/490.6b1a83f0.chunk.css.map",
@@ -33,6 +33,6 @@
   },
   "entrypoints": [
     "static/css/main.007e8588.css",
-    "static/js/main.7af7bdd5.js"
+    "static/js/main.af9006c5.js"
   ]
 }
