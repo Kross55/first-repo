@@ -4,6 +4,7 @@ import s from "./ProfileInfo.module.css";
 import smile from '../../../assets/images/smile.png'
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/user.png"
+import ProfileDataForm from "./ProfileDataForm";
 
 const ProfileInfo = (props) => {
 
@@ -83,11 +84,6 @@ const ProfileData = (props) => {
             </div>
             */}
         </div>
-    )
-}
-const ProfileDataForm = (props) => {
-    return (
-        <div>Formic</div>
     )
 }
 
