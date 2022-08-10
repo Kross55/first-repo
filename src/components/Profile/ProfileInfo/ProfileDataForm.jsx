@@ -1,90 +1,89 @@
 import React from 'react';
+import s from "./ProfileInfo.module.css";
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as Yup from "yup";
 import { minMaxLengthCreator } from '../../common/validators/validators';
 
-const createField = (name, type, placeholder, errorName) => {
-  return (
-    <div>
-      <div>
-        <Field name={name} type={type} placeholder={placeholder} />
-      </div>
-      <ErrorMessage name={errorName} component="div" />
-    </div>
-  );
-};
-
-const validateLoginForm = values => {
-   const errors = {};
-   if (!values.email) {
-      errors.email = 'Required 1';
-   } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test( values.email )
-   ) {
-      errors.email = 'Invalid email address';
-   }
-   return errors;
-};
-
-const validationSchemaLoginForm = Yup.object().shape( {
-   name: Yup.string().typeError("Должно быть строкой").required("Обязательно 1"),
-   secondName: Yup.string().typeError("Должно быть строкой").required("Обязательно 2"),
-   password: minMaxLengthCreator(3, 12).required( "Required 2" ),
-   confirmPassword: Yup.string().oneOf([Yup.ref("password")], "Пароли не совпадают").required("Обязательно 3"),
-   email: Yup.string().email("введите верный email"),
-   confirmEmail: Yup.string().oneOf([Yup.ref("email")], "Email не совпадают").required("Обязательно 4")
+const validationSchemaProfileDataForm = Yup.object().shape( {
+  aboutMe: minMaxLengthCreator(0, 50).required("Required"),
+  fullName: Yup.string().typeError("Должно быть строкой").required("Required"),
 } );
 
 const ProfileDataForm = (props) => {
   return (
     <div>
       <Formik
-        initialValues={{
-          name: "",
-          secondName: "",
-          email: "",
-          confirmEmail: "",
-          password: "",
-          confirmPassword: "",
-          rememberMe: false,
-        }}
-        validate={validateLoginForm}
+        initialValues={props.initialValues}
         validateOnBlur
-        validationSchema={validationSchemaLoginForm}
-        
-        onSubmit={(values, { setSubmitting, setStatus }) => {
-          props.login(values.email, values.password, values.rememberMe, setStatus);// передаём в BLL эти параметры из локального стейта Formik
-          setSubmitting(false);
-        }}
+        validationSchema={validationSchemaProfileDataForm}
+        //получаем необходимую логику для изменения профиля из ProfileInfo через пропсы
+        onSubmit={props.onSubmit}
       >
         {({ isValid, handleSubmit, dirty, status }) => (
           <Form >
-
-            <label htmlFor="name">Имя</label>
+            
+            <label htmlFor="aboutMe"><b>About me:</b></label>
             <br />
-            {createField("name", "text", "Stepan", "name")}
+            <div>
+              <div>
+                <Field as="textarea" name="aboutMe" placeholder="Some words about myself" />
+              </div>
+              <ErrorMessage name="aboutMe" component="div" />
+            </div>
 
-            <label htmlFor="secondName">Фамилия</label>
+            <label htmlFor="fullName"><b>Full name:</b></label>
             <br />
-            {createField("secondName", "text", "Bandera", "secondName")}
+            <div>
+              <div>
+                <Field name="fullName" type="text" placeholder="fullName" />
+              </div>
+              <ErrorMessage name="fullName" component="div" />
+            </div>
 
-            {createField("email", "text", "e-mail", "email")}
+            <div>
+              <Field name="lookingForAJob" type="checkbox" id="lookingForAJob" />
+              <label htmlFor="lookingForAJob"><b>Looking for a JOB</b></label>
+            </div>
 
-            {createField("confirmEmail", "text", "confirm e-mail", "confirmEmail")}
+            <label htmlFor="lookingForAJobDescription"><b>My profissional skills:</b></label>
+            <br />
+            <div>
+              <div>
+                <Field name="lookingForAJobDescription" as="textarea" placeholder="My profissional skills" />
+              </div>
+              <ErrorMessage name="lookingForAJobDescription" component="div" />
+            </div>
 
-            {createField("password", "password", "password", "password")}
-
-            {createField("confirmPassword", "password", "confirm password", "confirmPassword")}
-
+            <label htmlFor="contacts"><b>My contacts:</b></label>
+            <br />
+            <div> 
+              {/*с помощью Object.keys будем мапить контакты из профиля,
+              профиль прокидываем сюда через пропсы*/}
+              {Object.keys(props.profile.contacts).map(key => {
+                return (
+                  <div key={key} className={s.contacts}>
+                    <b>{key}:</b>
+                    <div>
+                      <Field name={"contacts." + key} type="text" />
+                    </div>
+                    <ErrorMessage name={key} component="div" />
+                  </div>
+                )
+              })}  
+            </div>
+            
+            {/*отображается серверная ошибка,
+            если ввести невалидный адрес */}
             <div>{status}</div>
-
-            <button
-              disabled={!isValid && !dirty}
-              onClick={handleSubmit}
-              type={"submit"}
-            >
-              Change
-            </button>
+             
+            <div>
+              <button
+                disabled={!isValid && !dirty}
+                onClick={handleSubmit}
+                type={"submit"}>
+                Save
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

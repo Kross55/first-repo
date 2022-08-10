@@ -21,6 +21,8 @@ export const usersApi = {
     let response = await instance.delete(`follow/${userId}`) 
         return response.data
   },
+  //запись для переадресации axios запроса, 
+  //если не хотим менять путь в наших компонентах!!!
   getUserProfile (userId) {
     console.warn('Obsolete method. Please profileApi object.')
       return profileApi.getUserProfile(userId)
@@ -41,11 +43,19 @@ export const profileApi = {
     return response.data;
   },
   async savePhoto(photoFile) {
-    const formData = new FormData();             //часть кода необходимый для зарузки файлов
-    formData.append("image", photoFile);         //"image" взято из документации сервера, так называется объект фото Properties -image: required(file)
-    let response = await instance.put(`profile/photo`, formData); //передаём фото на сервер в качестве второго параметра(как обычно для put)
+    //часть кода необходимый для зарузки файлов
+    const formData = new FormData(); 
+    //"image" взято из документации сервера, так называется объект фото Properties - image: required(file)            
+    formData.append("image", photoFile);
+    //передаём фото на сервер в качестве второго параметра(как обычно для put)         
+    let response = await instance.put(`profile/photo`, formData); 
     return response.data;
   },
+  async saveProfile(profile) {
+    //запрос на изменения профиля, в который мы помещаем объект профиля целиком
+    let response = await instance.put(`profile`, profile); 
+    return response.data;
+  },  
 };
 
 

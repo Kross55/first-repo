@@ -7,10 +7,11 @@ import userPhoto from "../../../assets/images/user.png"
 import ProfileDataForm from "./ProfileDataForm";
 
 const ProfileInfo = (props) => {
+    //используем локальный стейт для editMode
+    let [editMode, setEditMode] = useState(false)
 
-    let [editMode, setEditMode] = useState(false)//используем локальный стейт для editMode
-
-    const activateEditMode = () => {//переменная для изменения editMode
+    //переменная для изменения editMode
+    const activateEditMode = () => {
         setEditMode(true)
     }
 
@@ -19,30 +20,53 @@ const ProfileInfo = (props) => {
     }
 
     const onMainPhotoSelected = (e) => {
-      if(e.target.files.length){          //проверка массива с файлами на количество объектов/на его длиинну
-        props.savePhoto(e.target.files[0])//диспатчим санку, передаём выбранное фото на сервер, и сохраняем его в state.profile
+      //проверка массива с файлами на количество объектов/на его длиинну
+      if(e.target.files.length){ 
+        //диспатчим санку, передаём выбранное фото на сервер, и сохраняем его в state.profile
+        props.savePhoto(e.target.files[0])
       }
+    }
+    
+    //логика, выполняемая при нажатии на кнопку
+    const onSubmit = (formData, { setSubmitting, setStatus }) => {
+        //диспатчим санку изменения профиля и отображаем серверную ошибку внутри Formik
+        props.saveProfile(formData, setStatus)
+        setSubmitting(false)
+        //выходим из компоненты редактирования на компоненту отображения профиля
+        setEditMode(false)
     }
 
     return (
         <div>
-            {/*<div className={s.item}>
-                <img src="https://mobimg.b-cdn.net/v3/fetch/70/708698fd251a43214d6198c0c6438156.jpeg"/>
-            </div>*/}
             <div className={s.profileView}>
+                {/*отображаем фото из сервера или загруженную нами картинку*/}
                 <img src={props.profile.photos.large || userPhoto}/>
-                {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}{/*добавляем onChange чтобы можно было менять наше фото*/ }
+
+                {/*отображаем поле input только у владельца профиля,
+                фото других юзеров менять нельзя*/}
+                {props.isOwner && <input 
+                                    type={"file"} 
+                                    onChange={onMainPhotoSelected}/>}
+                                    {/*добавляем onChange чтобы можно было менять наше фото*/ }
                 
                 <ProfileStatusWithHooks
                     status={props.status}
                     updateStatus={props.updateStatus} />
                 
-                { editMode 
-                   ? <ProfileDataForm profile={props.profile}/> //компонента для формы Formic где мы будем заполнять наши данные и отсылать на сервер
-                   : <ProfileData //компонент с нашими данными которые мы будем получать из сервера
+                { editMode
+                    //компонента для формы Formic где мы будем заполнять наши данные и отсылать на сервер
+                    ? <ProfileDataForm 
+                        profile={props.profile} 
+                        initialValues={props.profile}
+                        onSubmit={onSubmit}
+                        />
+                    //компонент с нашими данными которые мы будем получать из сервера
+                    : <ProfileData 
                         profile={props.profile} 
                         isOwner={props.isOwner}
-                        activateEditMode={activateEditMode}/>}{/*можно обойтись и без переменной, прописать activateEditMode={ () => {setEditMode(true)} }*/} 
+                        /*можно обойтись и без переменной activateEditMode, 
+                        прописать activateEditMode={ () => {setEditMode(true)} }*/
+                        activateEditMode={activateEditMode}/>} 
 
             </div>
         </div>
@@ -54,7 +78,7 @@ const ProfileData = (props) => {
         <div>
             {props.isOwner && <div><button onClick={props.activateEditMode}>Edit</button></div>}{/*кнопка для переключения между компонентами отображения данных и заполнения данных*/}
             <div>
-                <b>Name</b>: {props.profile.fullName}
+                <b>Full name</b>: {props.profile.fullName}
             </div>
             <div className={s.smile}>
                 <b>Lookig for a JOB</b>: {props.profile.lookingForAJob ? 'In active search' : <img src={smile} />}
@@ -71,22 +95,18 @@ const ProfileData = (props) => {
                 <b>About me</b>: {props.profile.aboutMe}
             </div>
             <div>
-                <b>My contacts</b>: {Object.keys(props.profile.contacts).map(key =>  //Object.keys появился для обработки объекта contacts из нашего профиля, который мы будем мапить! 
-                    <Contacts key={key} contactTitle={key} contactValue={props.profile.contacts[key] || "empty"} />
+                {/*Object.keys необходим для обработки объекта contacts из нашего профиля, который мы будем мапить,
+                данные которые мы вытягиваем, отображаем в виде компонент <Contacts/>!*/}
+                <b>My contacts</b>: 
+                    {Object.keys(props.profile.contacts).map(key =>   
+                        <Contacts key={key} contactTitle={key} contactValue={props.profile.contacts[key] || "empty"} />
                 )}
             </div>
-            {/*
-            <div className={s.contacts}>  // это я доставал каждое значение ключа объекта contacts отдельно и отображал их в виде ссылок
-                <div><a href='' >{props.profile.contacts.facebook || <div>facebook.com</div> }</a></div>
-                <div><a href='' >{props.profile.contacts.twitter || <div>twitter.com</div> }</a></div>
-                <div><a href='' >{props.profile.contacts.instagram || <div>instagram.com</div> }</a></div>
-                <div><a href='' >{props.profile.contacts.github || <div>github.com</div> }</a></div>
-            </div>
-            */}
         </div>
     )
 }
 
+//создали компоненту Contacts для использования выше в ProfileData
 const Contacts = ({contactTitle, contactValue}) => {
     return <div className={s.contacts} ><b>{contactTitle}</b>: {contactValue}</div>  
 }

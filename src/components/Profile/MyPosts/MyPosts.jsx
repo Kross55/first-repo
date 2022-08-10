@@ -8,7 +8,7 @@ const MyPosts = (props) => {
     let postsElements =
         [...props.posts]//копируем пропсы, чтобы не мутировать стейт
             .reverse()//мутирующий метод массива(чтобы его применить нужно предварительно скопировать массив)
-            .map( p => <Post message={p.message} likes={p.likes}/>)//не мутирующий метод массива
+            .map( p => <Post key={p.id} message={p.message} likes={p.likes}/>)//не мутирующий метод массива
 
     return (
         <div className={s.myPosts}>
