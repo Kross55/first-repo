@@ -56,13 +56,16 @@ const Login = (props) => {
           password: "",
           confirmPassword: "",
           rememberMe: false,
+          captcha: null,//7. добавляем сюда тоже
         }}
         validate={validateLoginForm}
         validateOnBlur
         validationSchema={validationSchemaLoginForm}
         
         onSubmit={(values, { setSubmitting, setStatus }) => {
-          props.login(values.email, values.password, values.rememberMe, setStatus);// передаём в BLL эти параметры из локального стейта Formik
+          // передаём в BLL эти параметры из локального стейта Formik
+          // 9. добавляем капчу для передачи на сервер
+          props.login(values.email, values.password, values.rememberMe, values.captcha, setStatus);
           setSubmitting(false);
         }}
       >
@@ -84,13 +87,18 @@ const Login = (props) => {
             {createField("password", "password", "password", "password")}
 
             {createField("confirmPassword", "password", "confirm password", "confirmPassword")}
-
-            <div>{status}</div>
             
             <div>
               <Field name={"rememberMe"} type={"checkbox"} id="rememberMe" />
               <label htmlFor={"rememberMe"}> remember me </label>
             </div>
+            
+            {/* 8. если captchaUrl в authReducer true, то отображаем её в виде изображения*/}
+            {props.captchaUrl && <img src={props.captchaUrl}/>}
+            {/*  8. если captchaUrl в authReducer true, добавляем поле ввода для написания капчи,которую видим на картинке*/}
+            {props.captchaUrl && createField("captcha", "text", "text symbols", "captcha")}
+
+            <div>{status}</div>
 
             <button
               disabled={!isValid && !dirty}
@@ -110,6 +118,8 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.isAuth,
+    // 6. достаём captchaUrl из authReducer 
+    captchaUrl: state.auth.captchaUrl,
   };
 };
 

@@ -64,12 +64,20 @@ export const authApi = {
     let response = await instance.get(`auth/me`)
         return response.data
   },
-  async login (email, password, rememberMe=false) {
-    let response = await instance.post(`auth/login`, {email, password, rememberMe})
+  async login (email, password, rememberMe=false, captcha=null) {
+    let response = await instance.post(`auth/login`, {email, password, rememberMe, captcha})
         return response.data
   },
   async logout () {
     let response = await instance.delete(`auth/login`)
+        return response.data
+  },
+}
+
+//1. запрос капчи от сервера, в ответе получим объект с урлом капчи
+export const securityApi = {
+  async getCaptchaUrl () {
+    const response = await instance.get(`security/get-captcha-url`)
         return response.data
   },
 }

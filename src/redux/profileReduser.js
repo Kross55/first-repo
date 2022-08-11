@@ -101,7 +101,7 @@ export const savePhoto = (file) => async (dispatch) => {
     }
 }
                                                    //санка изменения профиля на сервере
-export const saveProfile = (profile, setStatus) => async (dispatch, getState) => {
+export const saveProfile = (profile) => async (dispatch, getState) => {
     //достаём наш id из нашего store
     const userId = getState().auth.id
     //запрос в api (DAL) для изменения профиля на сервере
