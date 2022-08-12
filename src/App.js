@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import "./App.css";
-import { HashRouter, Routes, Route } from "react-router-dom";//Меняем BrowserRouter на HashRouter, чтобы работала перезагрузка страницы при запуске и работе с GitHub
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";//Меняем BrowserRouter на HashRouter, чтобы работала перезагрузка страницы при запуске и работе с GitHub
 import { Provider, connect } from 'react-redux';
 import store from './redux/redux-store';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -39,7 +39,9 @@ const App = (props) => {
             <NavContainer />
             <div className="app-wrapper-content">
                 <React.Suspense fallback={<div>Loading...</div>}> {/*Все ленивые рендеры должны быть внутри компоненты Suspense*/}
-                    <Routes>                                      {/*<div>Loading...</div> - мы видим пока загружается ленивы компонент*/}
+                    <Routes> 
+                        {/*перенаправляем c "/" на "/profile" */}
+                        <Route path="/" element={<Navigate to="/profile" />} />                                     {/*<div>Loading...</div> - мы видим пока загружается ленивы компонент*/}
                         <Route path="/dialogs/*" element=
                             {<DialogsContainer />} />
                         <Route path="/profile/*" element=
@@ -72,11 +74,12 @@ const AppContainer = connect(mapStateToProps, { initializeApp })(App);
 
 const SamuraiJsApp = (props) => {
     return (
-        <HashRouter>{/*для правильной работы GitHub*/}
+        //для правильной работы GitHub нужен HashRouter вместо BrowserRouter
+        <BrowserRouter>
             <Provider store={store} >
                 <AppContainer />
             </Provider>
-        </HashRouter>
+        </BrowserRouter>
     )
 }
 

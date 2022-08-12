@@ -4,6 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom/client";
 import SamuraiJsApp from './App';
 
+//1. здесь реакт рендериться в html DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<SamuraiJsApp />);
 

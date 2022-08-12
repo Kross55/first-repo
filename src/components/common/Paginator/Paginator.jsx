@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Paginator.module.css";
-import cn from "classnames"//нужно установить npm i classnames чтобы можно было объединять классы и использовать cn
+//нужно установить npm i classnames чтобы можно было объединять классы и использовать cn
+//cn( внутри перечисляем классы через запятую )
+import cn from "classnames"
 
 const Paginator = ({totalItemsCount, pageSize, portionSize=15, currentPage, onPageChanged, ...props}) => {
   let pagesCount = Math.ceil(totalItemsCount / pageSize);//округляет в большую сторону до целого значения
@@ -29,6 +31,7 @@ const Paginator = ({totalItemsCount, pageSize, portionSize=15, currentPage, onPa
               <span 
                 key={p}               //обязательно задаём ключ когда пользуемся методом map
                 className = { cn ({   //помогает нам объединять классы
+                  //класс стиля с условием - если р равно текущей странице то используем этот стиль
                   [styles.selectedPage] : currentPage === p} ,//внутренний класс, применяется внутри основного класса
                   styles.pageNumber) }//основной класс
                 onClick={(e) => {onPageChanged(p)}}>{/*нажимая на номер страницы мы перезаписываем номер страницы в нашем сторе*/}

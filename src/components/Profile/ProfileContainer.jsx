@@ -17,6 +17,7 @@ export function withRouter(Children){
 class ProfileContainer extends React.Component {
 
   updateProfile() {
+    //это мы достаём id других юзеров из url
     let userId = this.props.match.params.userIdNew;
     if (!userId) {
       userId = this.props.authorizedUserId
